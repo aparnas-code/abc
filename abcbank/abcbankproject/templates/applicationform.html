@@ -1,0 +1,154 @@
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript">
+		var districts = {
+			"Ernakulam": ["Aluva", "Edapally"],
+			"Kozhikode": ["Koyilandy", "Vatakara"],
+			"Thiruvananthapuram": ["Neyyattinkara", "Attingal"],
+			"Wayanad":["Kalpetta","Muttil","Mananthavady","Bathery"]
+		};
+
+		function updateBranches() {
+			var districtSelect = document.getElementById("district");
+			var branchSelect = document.getElementById("branch");
+			var selectedDistrict = districtSelect.value;
+			branchSelect.innerHTML = "";
+
+			if (selectedDistrict in districts) {
+				var branches = districts[selectedDistrict];
+				for (var i = 0; i < branches.length; i++) {
+					var branch = branches[i];
+					var option = document.createElement("option");
+					option.text = branch;
+					branchSelect.add(option);
+				}
+			}
+		}
+	</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body, html {
+  height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+</style>
+</head>
+<body>
+<center>
+<!--    {{ n }}-->
+    <form method="post" action="{% url 'abcapp:applicationform' %}" id="applicationform" role="form" novalidate="novalidate" class="bv-form">
+        {% csrf_token %}
+
+        <h2>Form</h2>
+        <table>
+            <tr>
+                <td>Name</td>
+                <td><input type="text" name="Name" required placeholder="Username" class="form-control"></td>
+            </tr>
+            <tr>
+                <td>DOB</td>
+                <td><input type="date" name="DOB" required placeholder="Date of Birth" class="form-control"></td>
+            </tr>
+            <tr>
+                <td>Age</td>
+                <td><input type="text" name="Age" required class="form-control"></td>
+            </tr>
+            <tr>
+                <td><label>Gender:</label></td>
+                <td>
+                    <input type="radio" name="Gender" value="male" required> Male
+                    <input type="radio" name="Gender" value="female" required> Female
+                    <input type="radio" name="Gender" value="other" required> Other
+                </td>
+            </tr>
+            <tr>
+                <td>Phone</td>
+                <td><input type="tel" name="Phone" minlength="10" maxlength="10" pattern="[0-9]{10}" required placeholder="Phone No" class="form-control"></td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td><input type="email" name="Email" required class="form-control" placeholder="E-mail"></td>
+            </tr>
+            <tr>
+                <td>Address</td>
+                <td><textarea name="Address" required class="form-control"></textarea></td>
+            </tr>
+            <tr>
+                <td><label for="district">District</label></td>
+                <td>
+                    <select id="district" name="district" onchange="updateBranches()">
+                        <option value="">-- Select District --</option>
+			            <option value="Ernakulam">Ernakulam</option>
+			            <option value="Kozhikode">Kozhikode</option>
+			            <option value="Thiruvananthapuram">Thiruvananthapuram</option>
+                        <option value="Wayanad">Wayanad</option>
+		            </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="branch">Branch:</label></td>
+                <td><select id="branch" name="branch">
+			              <option value="">-- Select Branch --</option>
+		            </select></td>
+            </tr>
+
+            <tr>
+                <td><label for="account">Account Type:</label></td>
+                <td>
+                    <select id="account" name="AccountType">
+                        <option value="savings">Savings Account</option>
+                        <option value="current">Current Account</option>
+                        <option value="fixed">Fixed Deposit Account</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label>Materials Provided:</label></td>
+                <td>
+                    <input type="checkbox" id="debit" name="MaterialsProvided" value="debit">
+                    <label for="debit">Debit Card</label><br>
+                    <input type="checkbox" id="credit" name="MaterialsProvided" value="credit">
+                    <label for="credit">Credit Card</label><br>
+                    <input type="checkbox" id="cheque" name="MaterialsProvided" value="cheque">
+                    <label for="cheque">Cheque Book</label><br>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td>
+                    <button type="submit">Submit</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <script type="text/javascript">
+		var districtSelect = document.getElementById("district");
+		var branchSelect = document.getElementById("branch");
+
+		districtSelect.addEventListener("change", function() {
+			var selectedDistrict = districtSelect.value;
+			document.body.className = "district-" + selectedDistrict;
+		});
+	</script>
+ {% for msg in messages %}
+     <h4>{{msg}}</h4>
+ {% endfor %}
+    <br>
+<a href="{% url 'abcapp:homepage' %}" >Return to home page</a>
+
+</center>
+</body>
+</html>
+{% endblock %}

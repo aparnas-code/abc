@@ -1,0 +1,83 @@
+
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body, html {
+  height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Add styles to the form container */
+.container {
+  position: relative;
+
+  max-width: 300px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1)
+}
+
+/* Full-width input fields */
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Set a style for the submit button */
+.btn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+.btn:hover {
+  opacity: 1;
+}
+</style>
+</head>
+<body>
+<center>
+    <br><br>
+    <div>
+
+        <form action="" method="post" class="container">
+           {% csrf_token %}
+            <h1>Login</h1>
+            <input type="text" name="username" placeholder="enter user name"><br>
+            <input type="password" name="password" placeholder="enter password"><br>
+            <button type="submit" class="btn">Login</button>
+        </form>
+    </div>
+    <div>
+        <br>
+        <a href="{% url 'abcapp:register' %}">click here to register</a>
+        {% for msg in messages %}
+            <h4>{{msg}}</h4>
+        {% endfor %}
+    </div>
+
+</center>
+</body>
+</html>
+{% endblock %}

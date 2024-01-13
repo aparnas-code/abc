@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body, html {
+  height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+</style>
+</head>
+<body>
+<center><h2>Registration Form</h2>
+<div class="container">
+    <div class="row">
+        <form method="post" action="{% url 'abcapp:register' %}">
+            {% csrf_token %}
+
+            <input type="text" name="username" placeholder="enter user name" required><br><br>
+            <input type="text" name="first_name" placeholder="enter your first name" required><br><br>
+            <input type="text" name="last_name" placeholder="enter your last name" required><br><br>
+            <input type="email" name="email" placeholder="enter your email" required><br><br>
+            <input type="password" name="password" placeholder="enter password" required> <br><br>
+            <input type="password" name="confirmpassword" placeholder="enter confirm password" required><br><br>
+
+            <button type="submit">Register</button>
+        </form>
+    </div>
+</div>
+ {% for msg in messages %}
+     <h4>{{msg}}</h4>
+ {% endfor %}
+</center>
+</body>
+</html>
+{% endblock %}
